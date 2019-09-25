@@ -1,5 +1,5 @@
 <template>
-    <ArticleList></ArticleList>
+    <ArticleList type="all"></ArticleList>
 </template>
 
 <script>

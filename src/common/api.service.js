@@ -12,6 +12,11 @@ const ApiService = {
         return Vue.axios.get(resource, params).catch(error => {
             throw new Error(`ApiService ${error}`);
         });
+    },
+    get(resource) {
+        return Vue.axios.get(resource).catch(error => {
+            throw new Error(`ApiService ${error}`);
+        });
     }
 };
 
@@ -22,5 +27,11 @@ export const ArticlesService = {
         return ApiService.query('articles' + (type === 'feed' ? '/feed' : ''), {
             params: params
         });
+    }
+};
+
+export const TagsService = {
+    get() {
+        return ApiService.get('tags');
     }
 };

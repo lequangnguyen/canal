@@ -5,11 +5,11 @@
                 ><img src="http://i.imgur.com/Qr71crq.jpg"
             /></a>
             <div class="info">
-                <a href="" class="author">Eric Simons</a>
-                <span class="date">January 20th</span>
+                <a href="" class="author">{{ article.author.username }}</a>
+                <span class="date">{{ article.createdAt }}</span>
             </div>
             <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                <i class="ion-heart"></i> 29
+                <i class="ion-heart"></i> {{ article.favoritesCount }}
             </button>
         </div>
         <router-link :to="articleLink" class="preview-link">
