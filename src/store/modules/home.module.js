@@ -6,7 +6,7 @@ import { ArticlesService, TagsService } from '../../common/api.service';
 const state = {
     articles: [],
     isLoading: true,
-    articleCount: 0,
+    articlesCount: 0,
     tags: []
 };
 
@@ -14,8 +14,8 @@ const getters = {
     articles(state) {
         return state.articles;
     },
-    articleCount(state) {
-        return state.articleCount;
+    articlesCount(state) {
+        return state.articlesCount;
     },
     isLoading(state) {
         return state.isLoading;

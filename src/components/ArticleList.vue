@@ -1,10 +1,20 @@
 <template>
     <div>
-        <ArticlePreview
-            v-for="(article, index) in articles"
-            :article="article"
-            :key="article.title + index"
-        />
+        <div v-if="isLoading">
+            <img
+                src="https://img.icons8.com/color/48/000000/spinner-frame-8.png"
+            />
+        </div>
+        <div v-else>
+            <div v-if="articles.length === 0" class="article-preview">
+                No articles are here... yet.
+            </div>
+            <ArticlePreview
+                v-for="(article, index) in articles"
+                :article="article"
+                :key="article.title + index"
+            />
+        </div>
     </div>
 </template>
 
@@ -21,15 +31,30 @@ export default {
     props: {
         type: {
             type: String,
-            required: true,
+            required: false,
             default: 'all'
+        },
+        itemsPerPage: {
+            type: Number,
+            required: false,
+            default: 10
         }
+    },
+    data() {
+        return {
+            currentPage: 1
+        };
     },
     computed: {
         listConfig() {
             const { type } = this;
+            const filter = {
+                offset: (this.currentPage - 1) * this.itemsPerPage,
+                limit: this.itemsPerPage
+            };
             return {
-                type
+                type,
+                filter
             };
         },
         ...mapGetters(['articles', 'articlesCount', 'isLoading'])
