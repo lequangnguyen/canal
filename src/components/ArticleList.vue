@@ -14,6 +14,13 @@
                 :article="article"
                 :key="article.title + index"
             />
+            <Pagination
+                :page-count="20"
+                :click-handler="test"
+                :prev-text="'<'"
+                :next-text="'>'"
+                :container-class="'my-pagination'"
+            ></Pagination>
         </div>
     </div>
 </template>
@@ -22,10 +29,12 @@
 import ArticlePreview from '@/components/ArticlePreview';
 import { mapGetters } from 'vuex';
 import { FETCH_ARTICLES } from '../store/actions.type';
+import Pagination from './Pagination';
 
 export default {
     name: 'ArticleList',
     components: {
+        Pagination,
         ArticlePreview
     },
     props: {
@@ -37,7 +46,7 @@ export default {
         itemsPerPage: {
             type: Number,
             required: false,
-            default: 10
+            default: 20
         }
     },
     data() {
@@ -57,6 +66,16 @@ export default {
                 filter
             };
         },
+        pages() {
+            if (this.isLoading || this.articlesCount <= this.itemsPerPage) {
+                return [];
+            }
+            return [
+                ...Array(
+                    Math.ceil(this.articlesCount / this.itemsPerPage)
+                ).keys()
+            ].map(e => e + 1);
+        },
         ...mapGetters(['articles', 'articlesCount', 'isLoading'])
     },
     mounted() {
@@ -65,6 +84,9 @@ export default {
     methods: {
         fetchArticles() {
             this.$store.dispatch(FETCH_ARTICLES, this.listConfig);
+        },
+        test() {
+            alert('ok');
         }
     }
 };

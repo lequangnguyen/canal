@@ -30,9 +30,7 @@
                 <div class="col-md-3">
                     <div class="sidebar">
                         <p>Popular Tags</p>
-                        <div class="tag-list">
-                            <Tag></Tag>
-                        </div>
+                        <Tag></Tag>
                     </div>
                 </div>
             </div>
