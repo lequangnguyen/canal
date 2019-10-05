@@ -15,11 +15,11 @@
                 :key="article.title + index"
             />
             <Pagination
-                :page-count="20"
-                :click-handler="test"
+                :page-count="pageCount"
                 :prev-text="'<'"
                 :next-text="'>'"
                 :container-class="'my-pagination'"
+                @updateCurrentPage="currentPage = $event"
             ></Pagination>
         </div>
     </div>
@@ -46,7 +46,7 @@ export default {
         itemsPerPage: {
             type: Number,
             required: false,
-            default: 20
+            default: 10
         }
     },
     data() {
@@ -76,10 +76,18 @@ export default {
                 ).keys()
             ].map(e => e + 1);
         },
+        pageCount() {
+            return Math.ceil(this.articlesCount / this.itemsPerPage);
+        },
         ...mapGetters(['articles', 'articlesCount', 'isLoading'])
     },
     mounted() {
         this.fetchArticles();
+    },
+    watch: {
+        currentPage(newValue) {
+            this.listConfig.filter.offset = (newValue - 1) * this.itemsPerPage;
+        }
     },
     methods: {
         fetchArticles() {

@@ -264,6 +264,7 @@ export default {
         }
     },
     computed: {
+        // Computed properties are by default getter-only, but you can also provide a setter when you need it
         selected: {
             get: function() {
                 return this.value || this.innerValue;
@@ -350,8 +351,9 @@ export default {
         handlePageSelected(selected) {
             if (this.selected === selected) return;
             this.innerValue = selected;
-            this.$emit('input', selected);
-            this.clickHandler(selected);
+            this.$emit('updateCurrentPage', selected);
+            // this.clickHandler(selected);
+            console.log(selected);
         },
         prevPage() {
             if (this.selected <= 1) return;
