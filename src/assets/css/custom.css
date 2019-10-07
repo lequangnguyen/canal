@@ -73,3 +73,7 @@
 .center {
     text-align: center;
 }
+
+.page-link {
+    font-weight: bold;
+}

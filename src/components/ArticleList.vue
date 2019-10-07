@@ -16,10 +16,10 @@
             />
             <Pagination
                 :page-count="pageCount"
-                :prev-text="'<'"
-                :next-text="'>'"
+                :prev-text="'Prev'"
+                :next-text="'Next'"
                 :container-class="'my-pagination'"
-                @updateCurrentPage="currentPage = $event"
+                :current-page.sync="currentPage"
             ></Pagination>
         </div>
     </div>
@@ -57,13 +57,13 @@ export default {
     computed: {
         listConfig() {
             const { type } = this;
-            const filter = {
+            const filters = {
                 offset: (this.currentPage - 1) * this.itemsPerPage,
                 limit: this.itemsPerPage
             };
             return {
                 type,
-                filter
+                filters
             };
         },
         pages() {
@@ -86,15 +86,13 @@ export default {
     },
     watch: {
         currentPage(newValue) {
-            this.listConfig.filter.offset = (newValue - 1) * this.itemsPerPage;
+            this.listConfig.filters.offset = (newValue - 1) * this.itemsPerPage;
+            this.fetchArticles();
         }
     },
     methods: {
         fetchArticles() {
             this.$store.dispatch(FETCH_ARTICLES, this.listConfig);
-        },
-        test() {
-            alert('ok');
         }
     }
 };

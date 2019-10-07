@@ -208,7 +208,8 @@ export default {
             type: String
         },
         pageLinkClass: {
-            type: String
+            type: String,
+            default: 'page-link'
         },
         prevClass: {
             type: String
@@ -242,7 +243,7 @@ export default {
         },
         firstLastButton: {
             type: Boolean,
-            default: false
+            default: true
         },
         firstButtonText: {
             type: String,
@@ -255,6 +256,9 @@ export default {
         hidePrevNext: {
             type: Boolean,
             default: false
+        },
+        currentPage: {
+            type: Number
         }
     },
     beforeUpdate() {
@@ -344,16 +348,15 @@ export default {
     },
     data() {
         return {
-            innerValue: 1
+            innerValue: this.currentPage
         };
     },
     methods: {
         handlePageSelected(selected) {
             if (this.selected === selected) return;
             this.innerValue = selected;
-            this.$emit('updateCurrentPage', selected);
+            this.$emit('update:currentPage', selected);
             // this.clickHandler(selected);
-            console.log(selected);
         },
         prevPage() {
             if (this.selected <= 1) return;
